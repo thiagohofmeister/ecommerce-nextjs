@@ -1,0 +1,8 @@
+.containerCenter {
+  width: 1200px;
+  margin: 0 auto 70px;
+
+  & > div {
+    margin-top: 70px;
+  }
+}

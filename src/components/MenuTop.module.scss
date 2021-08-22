@@ -1,0 +1,15 @@
+.menuTop {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+
+  &__item {
+    a {
+      font-size: 14px;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

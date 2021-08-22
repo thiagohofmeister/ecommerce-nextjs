@@ -1,0 +1,59 @@
+.bannerSlider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  &__left,
+  &__right {
+    position: absolute;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      font-size: 3em;
+    }
+  }
+
+  &__item {
+    display: none;
+
+    &--active {
+      display: block;
+    }
+  }
+
+  &__left {
+    left: 25px;
+  }
+
+  &__right {
+    right: 10px;
+  }
+
+  &__bullets {
+    position: absolute;
+    display: flex;
+    bottom: 20px;
+    gap: 15px;
+  }
+
+  &__bullet {
+    border-radius: 12px;
+    border: 2px solid #fff;
+    background-color: #fff;
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 0 7px #00000033;
+    cursor: pointer;
+
+    &--active {
+      border-width: 4px;
+      background-color: #000000;
+    }
+  }
+}

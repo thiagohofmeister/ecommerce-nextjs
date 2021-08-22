@@ -1,0 +1,54 @@
+.header {
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+
+  &__top,
+  &__bottom {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__top {
+    height: 30px;
+  }
+
+  &__bottom {
+    height: 100px;
+  }
+
+  &__phone {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 5px;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 200px;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__searchBtn,
+  &__userArea,
+  &__cartTop {
+    svg {
+      font-size: 1.75em;
+    }
+  }
+}
