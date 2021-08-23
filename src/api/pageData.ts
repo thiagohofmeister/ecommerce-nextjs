@@ -1,24 +1,45 @@
-const getBasePageData = async (siteId: string, requestInit: RequestInit) => {
+const getBasePageData = async (
+  siteId: string,
+  requestInit: RequestInit
+): Promise<IBasePageData> => {
   const [siteConfigsRequest, themeConfigsRequest] = await Promise.all([
     fetch(`https://api.1eg.dev/eco-store/site/${siteId}/configs`, requestInit),
     fetch(`https://api.1eg.dev/eco-store/site/${siteId}/DESKTOP/configs`, requestInit)
   ])
 
+  const themeConfigs = await themeConfigsRequest.json()
+
+  const menus = await getMenus(
+    requestInit,
+    themeConfigs.full_menu,
+    themeConfigs.main_menu,
+    themeConfigs.topbar_menu,
+    themeConfigs.main_menu_levels
+  )
+
   return {
     seo: {
       title: 'Home',
-      description: 'Home'
+      content: {
+        main: '',
+        additional: ''
+      },
+      metadata: []
     },
     site: {
       configs: await siteConfigsRequest.json()
     },
     theme: {
-      configs: await themeConfigsRequest.json()
-    }
+      configs: themeConfigs
+    },
+    menus
   }
 }
 
-export const getHomePageData = async (siteId: string, accountId: string) => {
+export const getHomePageData = async (
+  siteId: string,
+  accountId: string
+): Promise<IPageHomeData> => {
   const requestInit: RequestInit = {
     headers: {
       'x-account': accountId
@@ -27,7 +48,7 @@ export const getHomePageData = async (siteId: string, accountId: string) => {
 
   const basePageData = await getBasePageData(siteId, requestInit)
 
-  const [banners, showcases, menus] = await Promise.all([
+  const [banners, showcases] = await Promise.all([
     getHomeBanners(
       requestInit,
       basePageData.theme.configs.main_banner_home,
@@ -39,21 +60,13 @@ export const getHomePageData = async (siteId: string, accountId: string) => {
       basePageData.theme.configs.first_showcase_home,
       basePageData.theme.configs.second_showcase_home,
       basePageData.theme.configs.third_showcase_home
-    ),
-    getMenus(
-      requestInit,
-      basePageData.theme.configs.full_menu,
-      basePageData.theme.configs.main_menu,
-      basePageData.theme.configs.topbar_menu,
-      basePageData.theme.configs.main_menu_levels
     )
   ])
 
   return {
     ...basePageData,
     banners,
-    showcases,
-    menus
+    showcases
   }
 }
 
@@ -125,4 +138,31 @@ const getMenus = async (requestInit: RequestInit, ...menuIds: string[]) => {
   )
 
   return menus
+}
+
+export interface IBasePageData {
+  seo: {
+    title: string
+    content: {
+      main: string
+      additional: string
+    }
+    metadata: {
+      id: string
+      name: string
+      type: string
+    }[]
+  }
+  site: {
+    configs: any
+  }
+  theme: {
+    configs: any
+  }
+  menus: any
+}
+
+export interface IPageHomeData extends IBasePageData {
+  banners: any
+  showcases: any
 }
