@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './TopSearchBar.module.scss'
 
 const TopSearchBar: React.FC<ITopSearchBarProps> = ({ onClose }) => {
-  const ref = useRef(null)
+  const ref = useRef<HTMLHeadingElement>(null)
 
   const [search, setSearch] = useState<string>('')
   const { push } = useRouter()
@@ -21,9 +21,9 @@ const TopSearchBar: React.FC<ITopSearchBarProps> = ({ onClose }) => {
 
   useEffect(() => {
     const onClick = (e: any) => {
-      if (ref && !ref.current.contains(e.target)) {
-        onClose()
-      }
+      if (ref && ref.current && ref.current.contains(e.target)) return
+
+      onClose()
     }
 
     window.addEventListener('click', onClick)
