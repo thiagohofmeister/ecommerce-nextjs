@@ -8,7 +8,7 @@ import MenuTop from './MenuTop'
 import TopSearchBar from './TopSearchBar'
 
 const MainLayout: React.FC<IMainLayoutProps> = props => {
-  const [showSearchBar, setShowSearchBar] = useState<boolean>(true)
+  const [showSearchBar, setShowSearchBar] = useState<boolean>(false)
 
   const mainMenu = props.menus.find((menu: any) => menu.id === props.theme.configs.main_menu)
   const topMenu = props.menus.find((menu: any) => menu.id === props.theme.configs.topbar_menu)
