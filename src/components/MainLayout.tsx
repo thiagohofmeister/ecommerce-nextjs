@@ -1,12 +1,18 @@
 import { AccountCircleOutlined, Phone, Search, ShoppingCartOutlined } from '@material-ui/icons'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import styles from './MainLayout.module.scss'
-import MenuTop from './MenuTop'
 import MainMenu from './MainMenu'
+import MenuTop from './MenuTop'
+import TopSearchBar from './TopSearchBar'
 
 const MainLayout: React.FC<IMainLayoutProps> = props => {
+  const [showSearchBar, setShowSearchBar] = useState<boolean>(true)
+
+  const mainMenu = props.menus.find((menu: any) => menu.id === props.theme.configs.main_menu)
+  const topMenu = props.menus.find((menu: any) => menu.id === props.theme.configs.topbar_menu)
+
   return (
     <>
       <Head>
@@ -24,7 +30,7 @@ const MainLayout: React.FC<IMainLayoutProps> = props => {
           )}
 
           <nav>
-            <MenuTop />
+            <MenuTop menu={topMenu} />
           </nav>
         </div>
 
@@ -37,14 +43,20 @@ const MainLayout: React.FC<IMainLayoutProps> = props => {
             )}
           </div>
 
-          <nav>
-            <MainMenu />
-          </nav>
+          {showSearchBar ? (
+            <TopSearchBar onClose={() => setShowSearchBar(false)} />
+          ) : (
+            <nav>
+              <MainMenu menu={mainMenu} />
+            </nav>
+          )}
 
           <div className={styles.header__actions}>
-            <div className={styles.header__searchBtn}>
-              <Search />
-            </div>
+            {!showSearchBar && (
+              <div className={styles.header__searchBtn}>
+                <Search onClick={() => setShowSearchBar(!showSearchBar)} />
+              </div>
+            )}
 
             <div className={styles.header__userArea}>
               <Link href="#">
@@ -79,5 +91,6 @@ interface IMainLayoutProps {
   theme: {
     configs: any
   }
+  menus: any
   children?: ReactNode | undefined
 }

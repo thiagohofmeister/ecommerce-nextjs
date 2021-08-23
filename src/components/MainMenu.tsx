@@ -5,53 +5,32 @@ import Link from 'next/link'
 const MainMenu: React.FC<any> = props => {
   return (
     <ul className={styles.mainMenu}>
-      <li className={styles.mainMenu__item}>
-        <Link href="/">
-          <a>Novidades</a>
-        </Link>
-      </li>
-      <li className={styles.mainMenu__item}>
-        <Link href="/">
-          <a>Roupas</a>
-        </Link>
-      </li>
-      <li className={styles.mainMenu__item}>
-        <Link href="/">
-          <a>Sapatos</a>
-        </Link>
-      </li>
-      <li className={styles.mainMenu__item}>
-        <Link href="/">
-          <a>Beleza & Saúde</a>
-        </Link>
-      </li>
-      <li className={styles.mainMenu__item}>
-        <Link href="/">
-          <a>Lingerie</a>
-        </Link>
-      </li>
-      <li className={styles.mainMenu__item}>
-        <Link href="/">
-          <a>Fitness</a>
-        </Link>
-      </li>
-      <li className={styles.mainMenu__item}>
-        <Link href="/">
-          <a>Verão & Praia</a>
-        </Link>
-      </li>
-      <li className={styles.mainMenu__item}>
-        <Link href="/">
-          <a>Acessórios</a>
-        </Link>
-      </li>
-      <li className={styles.mainMenu__item}>
-        <Link href="/">
-          <a>% Promoções</a>
-        </Link>
-      </li>
+      {props.menu.items.map((item: IMenuItem, key: number) => (
+        <li key={key} className={styles.mainMenu__item}>
+          <Link href={item.link.url}>
+            <a target={`_${item.link.target.toLowerCase}`}>{item.label}</a>
+          </Link>
+        </li>
+      ))}
     </ul>
   )
+}
+
+interface IMenuTopProps {
+  menu: {
+    id: string
+    name: string
+    items: IMenuItem[]
+  }
+}
+
+interface IMenuItem {
+  label: string
+  link: {
+    target: string
+    url: string
+  }
+  subItems: IMenuItem[]
 }
 
 export default MainMenu

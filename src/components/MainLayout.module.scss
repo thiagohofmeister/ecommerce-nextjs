@@ -40,13 +40,15 @@
 
   &__actions {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     align-items: center;
   }
 
   &__searchBtn,
   &__userArea,
   &__cartTop {
+    cursor: pointer;
+
     svg {
       font-size: 1.75em;
     }
