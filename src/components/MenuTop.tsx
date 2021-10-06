@@ -3,6 +3,8 @@ import React from 'react'
 import styles from './MenuTop.module.scss'
 
 const MenuTop: React.FC<any> = props => {
+  if (!props.menu) return <></>
+
   return (
     <ul className={styles.menuTop}>
       {props.menu.items.map((item: IMenuItem, key: number) => (

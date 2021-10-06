@@ -2,7 +2,9 @@ import React from 'react'
 import styles from './MainMenu.module.scss'
 import Link from 'next/link'
 
-const MainMenu: React.FC<any> = props => {
+const MainMenu: React.FC<IMenuTopProps> = props => {
+  if (!props.menu) return <></>
+
   return (
     <ul className={styles.mainMenu}>
       {props.menu.items.map((item: IMenuItem, key: number) => (
